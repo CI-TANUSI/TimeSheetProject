@@ -1,0 +1,56 @@
+:host {
+    --slds-c-brand-accessible: #0070d2; /* Salesforce Blue */
+    --slds-c-brand-accessible-active: #005fb2;
+    --slds-g-color-neutral-base-100: #ffffff; /* White */
+    --slds-g-color-neutral-base-95: #f3f3f3; /* Light Grey */
+    --slds-c-card-color-background: var(--slds-g-color-neutral-base-100);
+    --slds-c-page-header-color-background: var(--slds-g-color-neutral-base-95);
+    --slds-c-tabs-item-color-background-active: var(--slds-g-color-neutral-base-100);
+}
+
+.slds-scope {
+    background-color: var(--slds-g-color-neutral-base-95);
+    min-height: 100vh;
+}
+
+.slds-page-header {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
+    border-bottom: 1px solid #dddbda;
+}
+
+.logout-icon {
+    cursor: pointer;
+}
+
+/* Making the datatable take up less vertical space */
+.slds-table_cell-buffer-left, .slds-table_cell-buffer-right {
+    padding-top: var(--slds-g-spacing-xx-small);
+    padding-bottom: var(--slds-g-spacing-xx-small);
+}
+
+.slds-modal__container {
+    max-width: 60rem;
+    width: 80%;
+}
+
+.dropdown-white-bg {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 10;
+}
+.dropdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.dropdown-item:hover {
+    background: #f4f6f9;
+}

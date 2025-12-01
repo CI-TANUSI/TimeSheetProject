@@ -1,0 +1,309 @@
+<apex:page renderAs="pdf" controller="MilestoneBasedController">
+    
+    <div style="width:100%; margin:0; display:inline-block">
+        <div style="width:45%; float:left; display:inline-block">
+            <apex:image url="{!URLFOR($Resource.logo1)}" width="170px" height="140px" />
+        </div>
+        
+        <div style="width:35%; float:right; text-align:left;  margin-top:10px;">
+            <apex:outputText rendered="{!$CurrentPage.parameters.invoicetype = 'PI Invoice'}">
+                <h1 style="font-weight:bold; margin: 0; font-size:23px">PROFORMA INVOICE</h1>
+            </apex:outputText>
+            <apex:outputText rendered="{!AND(showGST, NOT($CurrentPage.parameters.invoicetype == 'PI Invoice'))}">
+                <h1 style="font-weight:bold; margin: 0; font-size:36px">TAX INVOICE</h1>
+            </apex:outputText>
+            <apex:outputText rendered="{!AND(NOT(showGST), NOT($CurrentPage.parameters.invoicetype == 'PI Invoice'))}">
+                <h1 style="font-weight:bold; margin: 0; font-size:40px">INVOICE</h1>
+            </apex:outputText>
+            <apex:outputPanel rendered="{!$CurrentPage.parameters.SeriesType = 'RB'}">
+                <p style="font-size:18px; margin: 0;">Number: RB/{!$CurrentPage.parameters.Financial}/{!$CurrentPage.parameters.formattedNumber}</p>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!$CurrentPage.parameters.SeriesType = 'WG'}">
+                <p style="font-size:18px; margin: 0;">Number: WG/{!$CurrentPage.parameters.Financial}/{!$CurrentPage.parameters.formattedNumber}</p>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!$CurrentPage.parameters.SeriesType = 'PI'}">
+                <p style="font-size:18px; margin: 0;">Number: PI/{!$CurrentPage.parameters.Financial}/{!$CurrentPage.parameters.formattedNumber}</p>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!$CurrentPage.parameters.SeriesType = 'CI'}">
+                <p style="font-size:18px; margin: 0;">Number: CI/{!$CurrentPage.parameters.Financial}/{!$CurrentPage.parameters.formattedNumber}</p>
+            </apex:outputPanel>
+            <p style="font-size:18px; margin: 0;">Date: {!formattedDate}</p>
+            <p style="font-size:18px; margin: 0; ">Due Date: {!formattedFutureDate}</p>
+        </div>
+    </div>
+    
+    <div style="width:100%; clear:both;display:inline-block;">
+        <div style="width:30%; float:left; line-height:0px;display:inline-block;">
+            <h3 style="margin-top:0px;font-weight:bold;line-height:13px;">Bill TO:</h3>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; color:#444444;line-height:13px;">{!acc.Name}</p>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; color:#444444; line-height:13px;" >{!acc.BillingStreet},{!acc.BillingCity}</p>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; color:#444444;line-height:13px; ">{!acc.BillingState}, {!acc.billingCountry} - {!acc.BillingPostalCode}</p> 
+            
+            <apex:outputText rendered="{!NOT(ISBLANK(acc.GST__c))}">
+                <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:13px; color:#444444;line-height:13px;">GSTIN: {!acc.GST__c}</p>
+            </apex:outputText>
+        </div>
+        
+        <div style="width:35%; float:right; line-height:0px; ">
+            <h3 style="margin-top:0px;font-weight:bold; line-height:13px;">Bill From:</h3>
+            <p style="margin:0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  color:#444444;font-size:13px;line-height:13px;">{!selectedBillingAddress.Company_Name__c}</p>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  color:#444444;font-size:13px;line-height:13px;">{!selectedBillingAddress.Street__c},{!selectedBillingAddress.City__c}</p>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  color:#444444;font-size:13px;line-height:13px;">{!selectedBillingAddress.State__c},{!selectedBillingAddress.Country__c}</p>
+            <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  color:#444444;font-size:13px;line-height:13px;">{!selectedBillingAddress.Pin_Code__c}</p>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedBillingAddress.GST_No__c))}">
+                <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px;line-height:13px;">GSTIN: {!selectedBillingAddress.GST_No__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedBillingAddress.SAC_Code__c))}">
+                <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px;line-height:13px;">SAC Code: {!selectedBillingAddress.SAC_Code__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedBillingAddress.MSME_Reg_No__c))}">
+                <p style="margin:0px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px;line-height:13px;">MSME Reg.No: {!selectedBillingAddress.MSME_Reg_No__c}</p>
+            </apex:outputText>
+        </div>
+    </div>
+    
+    <div style="width:100%; clear:both;height:20px">
+    </div>
+    
+    <div style="clear:both; width:100% ; margin-top:20px;">
+        <table style="width:100%; border-collapse:collapse; border:2px solid black">
+            <tr>
+                <td style="padding:5px 5px 5px 15px; border:1px solid black; font-weight:bold;font-size:13px">S.No</td>
+                <td  style="padding:5px 0px 5px 180px;  border:1px solid black; border-right:none; font-weight:bold;font-size:13px"></td>
+                <td style="padding:5px 100px 5px 10px; border:1px solid black; border-left:none; font-weight:bold;font-size:13px">Description</td>
+                <td style="padding:5px 30px 5px 30px; border:2px solid black;font-weight:bold;font-size:13px">Amount</td>
+                 
+            </tr>
+            
+            <tr>
+                <td style="padding:5px 0px 5px 20px; border:1px solid black;font-size:12px">1</td>
+                <td colspan='2' style="padding:3px 10px 3px 150px; border:1px solid black; font-weight:bold;font-size:13px">{!paymentMilestone}</td>
+                <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">$ {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">
+                        <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">£ {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP', opp.CurrencyIsoCode != 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">{!formatmilestone}</td>
+                </apex:outputText>
+            </tr>
+            
+            <tr>
+                <td colspan='3' style="padding:3px 5px; text-align:right; border:1px solid black; font-weight:bold;font-size:13px">Subtotal</td>
+                <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">$ {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">
+                        <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">£ {!formatmilestone}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP', opp.CurrencyIsoCode != 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">{!formatmilestone}</td>
+                </apex:outputText>
+            </tr>
+            
+            <apex:outputText rendered="{!showGST}">
+                <apex:outputText rendered="{!showCGST_SGST}">
+                    <tr>
+                        <td colspan='3' style="padding:3px 5px; text-align:right; border:1px solid black;font-weight:bold;font-size:13px">CGST@9%</td>
+                        <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">$ {!formatcgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">
+                                <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formatcgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">£ {!formatcgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP', opp.CurrencyIsoCode != 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">{!formatcgst}</td>
+                        </apex:outputText>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan='3' style="padding:3px 5px; text-align:right; border:1px solid black;font-weight:bold;font-size:13px">SGST@9%</td>
+                        <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">$ {!formatsgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">
+                                <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formatsgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">£ {!formatsgst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP', opp.CurrencyIsoCode != 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">{!formatsgst}</td>
+                        </apex:outputText>
+                    </tr>
+                </apex:outputText>
+                <apex:outputText rendered="{!showIGST}">
+                    <tr>
+                        <td colspan='3' style="padding:3px 5px; text-align:right; border:1px solid black; width:80%; font-weight:bold;font-size:12px">IGST@18%</td>
+                        <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">$ {!formatigst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">
+                                <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formatigst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">£ {!formatigst}</td>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP',opp.CurrencyIsoCode != 'AUD')}">
+                            <td style="padding:3px 0px 3px 30px; border:2px solid black;font-size:13px">{!formatigst}</td>
+                        </apex:outputText>
+                    </tr>
+                </apex:outputText>
+                
+            </apex:outputText>
+            
+            
+            <tr>
+                  <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                    <td colspan="2" style="padding:5px; border:1px solid black;font-size:13px"><span style="font-weight:bold">Currency:</span> INR(Indian Rupees)</td>
+                </apex:outputText>
+                 <apex:outputText rendered="{!opp.CurrencyIsoCode == 'USD'}">
+                    <td colspan="2" style="padding:5px; border:1px solid black;font-size:13px"><span style="font-weight:bold">Currency:</span> USD(United States dollar)</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                    <td colspan="2" style="padding:5px; border:1px solid black;font-size:13px"><span style="font-weight:bold">Currency:</span> GBP(Great British Pound)</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'AUD'}">
+                    <td colspan="2" style="padding:5px; border:1px solid black;font-size:13px"><span style="font-weight:bold">Currency:</span> AUD(Australian Dollar)</td>
+                </apex:outputText>
+                <td colspan="1" style="padding:3px 5px; text-align:right; border:1px solid black; width:80%; font-weight:bold;font-size:14px">Grand Total</td>
+                <apex:outputText rendered="{!OR(opp.CurrencyIsoCode == 'USD', opp.CurrencyIsoCode == 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-weight:bold;font-size:15px">$ {!formattedAmount}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'INR'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-weight:bold;font-size:15px">
+                        <apex:image url="{!$Resource.Rupee_Symbol}" width="10" height="10" /> {!formattedAmount}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!opp.CurrencyIsoCode == 'GBP'}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-weight:bold;font-size:15px">£ {!formattedAmount}</td>
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(opp.CurrencyIsoCode != 'USD', opp.CurrencyIsoCode != 'INR', opp.CurrencyIsoCode != 'GBP',opp.CurrencyIsoCode != 'AUD')}">
+                    <td style="padding:3px 0px 3px 30px; border:2px solid black;font-weight:bold;font-size:15px">{!formattedAmount}</td>
+                </apex:outputText>
+            </tr>
+            
+            <tr>
+                <td colspan="4" style="padding:5px; border:1px solid black;font-size:13px"><span style="font-weight:bold">Amount in Words:</span> {!result}</td>
+                
+            </tr>
+            
+            
+        </table>
+    </div>
+    
+    
+    <apex:outputText rendered="{!NOT(ISBLANK(TRIM(description)))}">
+    <p>
+        <span style="font-weight:bold;font-size:15px; margin-top:0px">Note:</span>
+        <span> {!description}</span>
+    </p>
+    </apex:outputText>
+    
+    <div style="width:100%; margin-top:0px; display: inline-block">
+        <div style="width:60%; float:left; line-height:0px;">
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Account_No__c))}">
+                <p style="font-weight:bold; font-size:17px;">Bank Details:</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Beneficiary_Name__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">{!selectedAccountAddress.Beneficiary_Name__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Account_No__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  color:#444444;font-size:13px">A/C NO- {!selectedAccountAddress.Account_No__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.IFSC__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">IFSC CODE- {!selectedAccountAddress.IFSC__c} </p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Branch__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">BRANCH-{!selectedAccountAddress.Branch__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.SWIFT_Code__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">Swift Code-{!selectedAccountAddress.SWIFT_Code__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Bank_Code__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">Bank Code-{!selectedAccountAddress.Bank_Code__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddress.Bank_name__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">Bank Name-{!selectedAccountAddress.Bank_name__c}</p>
+            </apex:outputText>
+            
+            <apex:outputText rendered="{!NOT(ISBLANK(link))}">
+                <a href="{!link}" target="_blank">Click Here For Payment</a>
+            </apex:outputText>
+            
+            <apex:outputText rendered="{!(upwork == 'Rohit')}">
+                 <p style="font-weight:bold; font-size:17px;  margin-top:30px">Upwork Rohit Profile:</p><br />
+                <a href="https://www.upwork.com/freelancers/~019685f7fd5be2af91?mp_source=share" target="_blank">Click here to view</a>
+            </apex:outputText>
+            
+            <apex:outputText rendered="{!(upwork == 'Agency')}">
+                 <p style="font-weight:bold; font-size:17px;  margin-top:30px">Upwork Cloud Ingenious Profile:</p><br />
+                <a href="https://www.upwork.com/agencies/1808802022773104640/" target="_blank">Click here to view</a>
+            </apex:outputText>
+            
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Account_No__c))}">
+                <p style="font-weight:bold; font-size:17px;">Bank Details:</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Beneficiary_Name__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">{!selectedAccountAddresses.Beneficiary_Name__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Account_No__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">A/C NO- {!selectedAccountAddresses.Account_No__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.IFSC__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">IFSC CODE- {!selectedAccountAddresses.IFSC__c} </p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Branch__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">BRANCH-{!selectedAccountAddresses.Branch__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.SWIFT_Code__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444444;font-size:13px">Swift Code-{!selectedAccountAddresses.SWIFT_Code__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Bank_Code__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">Bank Code-{!selectedAccountAddresses.Bank_Code__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Bank_name__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">Bank Name-{!selectedAccountAddresses.Bank_name__c}</p>
+            </apex:outputText>
+            <apex:outputText rendered="{!NOT(ISBLANK(selectedAccountAddresses.Sort_code__c))}">
+                <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#444444;font-size:13px">Sort Code-{!selectedAccountAddresses.Sort_code__c}</p>
+            </apex:outputText>
+        </div>
+        
+        
+        <div style="width: 30%; float: right; padding-top: 10px; text-align: center;">
+            <apex:outputText rendered="{!showSign}">
+                <div style="display: inline-block;padding: 2px;">
+                    <apex:image url="{!$Resource.Signature1}" width="60" height="40" /><br />
+                    <span style="margin: 0; padding: 0; font-size: 16px;">Authorised Signatory</span>
+                </div>
+            </apex:outputText>
+        </div>
+        
+    </div>
+    
+    
+    <div style="padding-top:0px; clear:both; margin-top:20px">
+        <p style="font-size:14px; margin: 0 0 5px 0; font-weight:bold">Terms &amp; Conditions:</p>
+        <ul style=" margin-left: 20px; padding-left: 20px; font-size:12px ">
+            <li> In case of any concern that will be raised only within 5 days</li>
+            <li> No refund will be issued once payment is received, in case of billing error</li>
+            <li> Non-payment beyond the due date may lead to suspension of the services without further notices</li>
+        </ul>
+    </div>
+    
+</apex:page>

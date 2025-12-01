@@ -1,0 +1,94 @@
+<apex:page sidebar="false" setup="false" id="aPage" title="SMS Admin" showHeader="true" >    
+    <html>
+        <body>
+            <apex:includeScript value="/lightning/lightning.out.js" />
+            <apex:includeLightning />
+            <div id="spinner">                
+                <div class="slds-spinner_container">
+                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                      <span class="slds-assistive-text">Loading</span>
+                      <div class="slds-spinner__dot-a"></div>
+                      <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </div>            
+            <div class="ltng-container" id="ltngcontainer"></div>
+      
+
+<style>
+.ltng-container{width:100%;max-height:auto;min-height: 654px;}
+.slds-select_container:after{top: 20px;}
+.gkn-sms-waiting{
+    width: 64px;
+    height: 64px;    
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.navigation-container {
+    background-color: #fff;
+    float: left;
+    overflow-x: hidden;
+    position: relative;
+    width: 13%;
+    height:100%;
+}            
+.rightbar-container {
+    max-height: auto;
+    padding: 0;
+    vertical-align: top;
+    border-left: 1px solid rgb(216, 221, 230);
+    float: right;
+    position: relative;
+    width: 86.5%;
+}
+button .slds-icon--small {
+    height: 0.7rem !important;
+    line-height: 1;
+    width: 0.7rem !important;
+}
+.slds-tree__item.data-active {
+    background-color: #f0f8fc;
+}
+.data-active::before {
+    background-color: rgb(0, 112, 210);
+    content: "";
+    height: 30px;
+    left: -3.2em;
+    position: relative;
+    top: 0;
+    width: 4px;
+}
+.slds-scope .slds-tree [aria-level="1"] > .slds-tree__item {
+    padding-left: 0.6rem !important;
+}    
+.slds-scope .slds-tree [aria-level="2"] > .slds-tree__item {
+    padding-left: 2.6rem !important;
+}
+.slds-scope .slds-spinner_container{
+ z-index:101;   
+}    
+.slds-scope .slds-text-title--caps {
+    /*font-size: 1rem;*/
+    line-height: 1.25;
+    color: rgb(84, 105, 141);
+    text-transform: uppercase;
+    letter-spacing: .0625rem;
+    margin-left: 1em;margin-top: 1em;
+}    
+.setup-icon {
+    background-color: #0070D2;
+    padding: 3px;
+}
+.hide{
+    display:none;
+}    
+#AdminauraErrorMessage{
+    display:none;
+}    
+</style>            
+        </body>
+    </html>
+</apex:page>

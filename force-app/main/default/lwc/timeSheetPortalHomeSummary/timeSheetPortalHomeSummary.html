@@ -1,0 +1,47 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="4" padding="around-small">
+            <div class="box left-box">
+                 <div class="calendar-flex-col"> 
+                    <c-timesheet-portal-calendar-view user-id={userId}></c-timesheet-portal-calendar-view>
+                </div>
+            </div>
+        </lightning-layout-item>
+       
+        <lightning-layout-item size="8" padding="around-small">
+            
+            <div class="box top-box">
+                <div style="width:250px; margin-left:auto;">
+                    <lightning-combobox
+                        name="month Range"
+                        label="Salect Month Range"
+                        variant="label-hidden"
+                        value={chartFilter}
+                        placeholder="Select Progress"
+                        options={filterOptions}
+                        onchange={handleChartFilterChange}>
+                    </lightning-combobox>
+                </div>
+                <div> Chart<canvas class="myChart" user-id={userId}></canvas></div>
+                
+            </div>
+            <!-- <div class="box bottom-box">
+                <div style="width:250px; margin-left:auto;">
+                    <lightning-combobox
+                        name="month Range"
+                        label="Salect Month Range"
+                        value={value}
+                        placeholder="Select Progress"
+                        options={options}
+                        onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+              <div class="leaderboard-outer-card">
+                <c-time-sheet-portal-leader-board></c-time-sheet-portal-leader-board>
+            </div>
+            </div> -->
+
+        </lightning-layout-item>
+
+    </lightning-layout>
+</template>

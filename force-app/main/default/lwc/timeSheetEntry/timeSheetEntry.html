@@ -1,0 +1,256 @@
+<template>
+    <div class="slds-scope">
+        <!--Header-->
+        <div class="slds-page-header slds-p-around_medium slds-theme_default">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="standard:timesheet" size="large"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <h1 class="slds-page-header__title slds-text-heading_large">Timesheet Portal</h1>
+                            <p class="slds-text-body_small">CloudIngenious</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-align-middle">
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-grid slds-grid_align-end slds-align-middle">
+                    <lightning-button-icon icon-name="utility:user" variant="border-filled" class="slds-m-right_small"></lightning-button-icon>
+                    <lightning-button label="Logout" onclick={handleLogout} variant="neutral"></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <lightning-tabset selected-tab-value={selectedTab} onselect={handleTabSelect}>
+             <lightning-tab label="Home" value="home">
+                
+                <div class="slds-p-around_medium">
+                    <c-home-summary person-id={personId}></c-home-summary>
+                </div>
+            </lightning-tab> 
+             <lightning-tab label="TimeSheet" value="timesheet">
+                <!--Timesheet Tab Content -->
+                <div class="slds-p-around_medium">
+                    <c-time-sheet-tab person-id={personId}></c-time-sheet-tab>
+                </div>
+            </lightning-tab>
+
+            <!--<lightning-tab label="TimeSheet" value="timesheet">
+                 Timesheet Tab Content 
+                <div class="slds-p-around_medium">
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium slds-align_absolute-center">
+                        <div class="slds-col slds-size_1-of-6">
+                            <lightning-input type="date" name="filterStartDate" label="Start Date" value={filterStartDate} onchange={handleFilterDateChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6">
+                            <lightning-input type="date" name="filterEndDate" label="End Date" value={filterEndDate} onchange={handleFilterDateChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6 slds-align-bottom">
+                            <lightning-button label="Filter" onclick={handleFilterClick} variant="brand" class="slds-m-bottom_xx-small"></lightning-button>
+                        </div>
+                        <div class="slds-col slds-size_2-of-6">
+                            <div class="slds-input-has-icon slds-input-has-icon_left">
+                                <lightning-icon icon-name="utility:search" size="x-small" class="slds-input__icon"></lightning-icon>
+                                <input type="text" id="search" class="slds-input" placeholder="Search..." onchange={handleSearchChange} value={searchKey}/>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6 slds-text-align_right">
+                            <lightning-button label="New" variant="brand" onclick={handleNewClick}></lightning-button>
+                        </div>
+                    </div>
+
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={data} 
+                        columns={columns} 
+                        onrowaction={handleRowAction}
+                        sorted-by={sortedBy} 
+                        sorted-direction={sortedDirection} 
+                        onsort={handleSort}>
+                    </lightning-datatable>
+                    
+                    <div class="slds-m-around_medium slds-text-align_center">
+                        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious} disabled={isFirstPage}></lightning-button>
+                        <span class="slds-m-horizontal_medium">Page {pageNumber} of {totalPages}</span>
+                        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext} disabled={isLastPage}></lightning-button>
+                    </div>
+                </div>
+            </lightning-tab>-->
+            <lightning-tab label="Extract TimeSheet" value="extracttimesheet" if:true={extract}>
+                <c-time-sheet-extract person-id={personId}></c-time-sheet-extract>
+            </lightning-tab>
+            <lightning-tab label="Regularize" value="regularize">
+                <c-time-sheet-regularization person-id={personId}></c-time-sheet-regularization>
+            </lightning-tab>
+            <lightning-tab label="Team Regularize" value="teamregularize" if:true={tabteamregularize}>
+                <c-time-sheet-team-regularization person-id={personId}></c-time-sheet-team-regularization>
+            </lightning-tab>
+            <lightning-tab label="My Productivity" value="myproductivity">
+                <c-my-productivity person-id={personId}></c-my-productivity>
+            </lightning-tab>
+            <lightning-tab label="Team Productivity" value="teamproductivity" if:true={tabteamregularize}>
+                <c-team-productivity person-id={personId}></c-team-productivity>
+            </lightning-tab>
+        </lightning-tabset>
+
+        <!-- Modals are kept the same -->
+
+        <!--making record timesheet-->
+        <template if:true={showtimesheetmodal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            onclick={closeTimesheetModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close"
+                                size="small"></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium">New Timesheet</h2>
+                    </header>
+
+                    <!-- Body -->
+                   
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p class="slds-col slds-size_1-of-2">
+                            <lightning-input name="Date" value={date} type="date" label="Date" onchange={handleInputChange}
+                                max={maxDate} min={minDate} class="validation" required>
+                            </lightning-input> 
+                        </p>
+
+                        <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-combobox name="ProjectCode" label="Project Code" value={projectCode}
+                                        placeholder="Select Project Code" options={projectCodeOptions} class="validation"
+                                        onchange={handleInputChange} required>
+                                    </lightning-combobox>
+                                </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox name="WorkType" value={type} label="Type" placeholder="Work Type"
+                                    class="validation" options={workTypeOptions} onchange={handleInputChange} >
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox name="WorkStatus" value={workStatus} label="Work Status"
+                                    placeholder="Work Status" class="validation" options={workStatusOptions}
+                                    onchange={handleInputChange} >
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input name="TimeTaken" value={timeTaken} type="number" label="Time Taken (min)"
+                                    onchange={handleInputChange} class="validation" required>
+                                </lightning-input>
+                            </div>
+                        </div>
+
+                        <lightning-textarea name="Technical" value={technical} label="Technical Description"
+                            onchange={handleInputChange} class="validation" required>
+                        </lightning-textarea>
+
+                        <lightning-textarea name="Functional" value={functional} label="Functional Description"
+                            onchange={handleInputChange} class="validation">
+                        </lightning-textarea>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeTimesheetModal}></lightning-button>
+                        <lightning-button class="slds-m-left_small" label="Save" variant="brand"
+                            onclick={saveTimesheet}></lightning-button>
+                        <lightning-button class="slds-m-left_small" label="Save & New" variant="brand"
+                            onclick={saveAndNew}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template> 
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Regularize Modal -->
+        <template if:true={showRegularizeModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            onclick={closeRegularizeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close"
+                                size="small"></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Regularize Timesheet</h2>
+                    </header>
+
+                    <!-- Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <div class="slds-divider slds-m-vertical_medium"></div>
+
+                        <!-- Editable Fields -->
+                        <div class="slds-text-heading_small slds-m-bottom_medium">Update Values for Regularization</div>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input name="Date" value={date} type="date" label="Date"
+                                    onchange={handleInputChange} max={maxDate} class="validation" required>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input type="number" name="TimeTaken" label="Time Taken - (Minutes)"
+                                    value={timeTaken} onchange={handleInputChange} class="validation" required>
+                                </lightning-input>
+                            </div>
+
+                        </div>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox name="ProjectCode" label="Project Code" value={projectCode}
+                                    placeholder="Select Project Code" options={projectCodeOptions} class="validation"
+                                    onchange={handleInputChange} required>
+                                </lightning-combobox>
+                            </div>
+                            
+
+                            <!-- <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox name="Type" label="Type" value={type} options={workTypeOptions}
+                                    onchange={handleInputChange} class="validation" required>
+                                </lightning-combobox>
+                            </div> -->
+
+                        </div>
+                        
+                        
+                        <!-- <lightning-textarea name="Technical" label="Technical Description" value={technical}
+                            onchange={handleInputChange} class="validation" required>
+                        </lightning-textarea> -->
+
+                        <!-- <lightning-textarea name="Functional" label="Functional Description" value={functional}
+                            onchange={handleInputChange}>
+                        </lightning-textarea> -->
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeRegularizeModal}>Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={handleRegularize}> Regularization</button>
+                    </footer>
+                </div>
+            </section>
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template> 
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

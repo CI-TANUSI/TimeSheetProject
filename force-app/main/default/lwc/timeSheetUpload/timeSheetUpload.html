@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="TimeSheet Upload" >
+        <div class="slds-p-around_medium" style="text-align: center;">
+            <lightning-button label="Upload CSV File" onclick={handleUploadClick} icon-name="utility:upload"></lightning-button>
+            <input type="file" accept=".csv" onchange={handleFileChange} style="display:none" />
+        </div>
+
+        <template if:true={isDataLoaded}>
+           
+            <div class="slds-p-around_medium">
+                <lightning-combobox
+                    name="status"
+                    label="Update Status"
+                    value={selectedStatus}
+                    placeholder="Select Status"
+                    options={statusOptions}
+                    onchange={handleStatusChange}>
+                </lightning-combobox>
+             
+                <div class="slds-m-around_medium">
+                <lightning-button 
+                    variant="brand"
+                    label="Update"
+                    onclick={handleUpdateClick}>
+                </lightning-button>
+                 </div>
+            </div>
+         
+
+            <div class="slds-p-around_medium">
+                <lightning-datatable
+                    key-field="id"
+                    data={tableData}
+                    columns={columns}>
+                </lightning-datatable>
+            </div>
+        </template>
+    </lightning-card>
+</template>

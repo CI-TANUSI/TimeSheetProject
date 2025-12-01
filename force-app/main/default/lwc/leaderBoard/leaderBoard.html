@@ -1,0 +1,23 @@
+<template>
+    <div class="sfdc-card">
+        <h3 class="leaderboard-heading">LeaderBoard</h3>
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Approved Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={rows} for:item="row">
+                    <tr key={row.name}>
+                        <td>{row.rank}</td>
+                        <td>{row.name}</td>
+                        <td>{row.approved}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

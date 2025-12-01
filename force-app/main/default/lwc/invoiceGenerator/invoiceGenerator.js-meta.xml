@@ -1,0 +1,34 @@
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Record Id" />
+            <property name="vfpage" type="String" label="Vf Page" />
+            <property name="descriptions" type="String" label="Descriptions" />
+            <property name="paymentmilestone" type="String" label="Paymentmilestone" />
+             <property name="billingAddressDevName" type="String" label="Billing Address Developer Name" />
+             <property name="billingAccountDevName" type="String" label="Billing Account Developer Name" />
+             <property name="billingAccountDevNames" type="String" label="Billing Account Developer Names" />
+             <property name="billingAccountWgDevNames" type="String" label="Billing Account Wg Developer Names" />
+             <property name="gstApplicable" type="String" label="Gst Applicable" />
+             <property name="gstType" type="String" label="GST Type" />
+             <property name="igstValue" type="String" label="IGST Value" />
+             <property name="cgstValue" type="String" label="CGST Value" />
+             <property name="sgstValue" type="String" label="SGST Value" />
+             <property name="totalworkingdays" type="String" label="Total Working Days" />
+             <property name="totalbillabledays" type="String" label="Total Billable Days" />
+             <property name="totalworkinghours" type="String" label="Total Working Hours" />
+             <property name="totalbillablehours" type="String" label="Total Billable Hours" />
+             <property name="rate" type="String" label="Rate" />
+             <property name="sign" type="String" label="Signature" />
+             <property name="link" type="String" label="Link" />
+             <property name= "upwork" type = "String" label= "Upwork profile" />
+             <property name= "invoicetype" type = "String" label= "Invoice Type" />
+
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

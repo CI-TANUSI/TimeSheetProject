@@ -1,0 +1,87 @@
+<template>
+    <div class="sfdc-card">
+        <!-- <h3 class="summary-heading">Timesheet Summary</h3> -->
+        <div class="highlight-panel">
+            <h2 class="ticker-heading">My Ticker Report</h2>
+            <!-- Filter Controls -->
+            <div class="slds-p-around_medium">
+                <div class="slds-grid slds-grid_align-center slds-gutters">
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="date" label="Start Date" value={startDate} onchange={handleStartDateChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <lightning-input type="date" label="End Date" value={endDate} onchange={handleEndDateChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6 button-wrapper">
+                        <lightning-button 
+                            label="Go" 
+                            variant="brand" 
+                            onclick={handleGoButtonClick}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+            <!-- Summary Cards -->
+            <template if:true={summaryLoaded}>
+                <div class="slds-grid slds-wrap slds-grid_align-center slds-gutters slds-p-around_medium">
+                    <!-- Filled Hours -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-p-around_x-small">
+                        <div class={filledHoursColorClass} style="text-align:center; padding:1rem; position:relative;">
+                            <h2 class="slds-m-bottom_small">Filled Hours</h2>
+                            <p>{summary.FilledHours}</p>
+                            <span class="box-percent">{filledHoursPercent}%</span>
+                        </div>
+                    </div>
+                    <!-- Approved Hours -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-p-around_x-small">
+                        <div class={approvedHoursColorClass} style="text-align:center; padding:1rem; position:relative;">
+                            <h2 class="slds-m-bottom_small">Approved Hours</h2>
+                            <p>{summary.ApprovedHours}</p>
+                            <span class="box-percent">{approvedHoursPercent}%</span>
+                        </div>
+                    </div>
+                    <!-- Unapproved Hours -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-p-around_x-small">
+                        <div class={unapprovedHoursColorClass} style="text-align:center; padding:1rem; position:relative;">
+                            <h2 class="slds-text-heading_small slds-m-bottom_small">Unapproved Hours</h2>
+                            <p>{summary.UnapprovedHours}</p>
+                            <span class="box-percent">{unapprovedHoursPercent}%</span>
+                        </div>
+                    </div>
+                    <!-- Temp. Approved Hours -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-p-around_x-small">
+                        <div class={tempApprovedHoursColorClass} style="text-align:center; padding:1rem; position:relative;">
+                            <h2 class="slds-m-bottom_small">Temp. Approved</h2>
+                            <p>{summary.TempApprovedHours}</p>
+                            <span class="box-percent">{tempApprovedHoursPercent}%</span>
+                        </div>
+                    </div>
+                    <!-- Blank Hours -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-p-around_x-small">
+                        <div class={blankHoursColorClass} style="text-align:center; padding:1rem; position:relative;">
+                            <h2 class="slds-m-bottom_small">Blank Hours</h2>
+                            <p>{summary.BlankHours}</p>
+                            <span class="box-percent">{blankHoursPercent}%</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <!-- Rest of the content (calendar, leaderboard, etc.) -->
+        <div class="summary-flex-row">
+            <div class="calendar-flex-col">
+                <c-calendar-view 
+                    filled-hours-by-date={filledHoursByDate} 
+                    year={calendarYear} 
+                    month={calendarMonth}
+                    onmonthchange={handleMonthChange} 
+                ></c-calendar-view>
+            </div>
+
+            <div class="leaderboard-outer-card">
+                <c-leader-board></c-leader-board>
+            </div>
+        </div>
+    </div>
+  
+</template>

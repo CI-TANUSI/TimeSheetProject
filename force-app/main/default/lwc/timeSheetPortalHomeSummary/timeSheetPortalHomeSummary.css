@@ -1,0 +1,10 @@
+.left-box{
+    position: sticky;
+    top: 0;
+}
+.top-box{
+     padding: 15px;
+    border-color:2px solid black;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}

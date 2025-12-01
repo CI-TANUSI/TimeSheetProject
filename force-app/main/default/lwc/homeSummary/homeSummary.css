@@ -1,0 +1,189 @@
+.button-wrapper {
+    display: flex;
+    align-items: flex-end;
+    padding-top: 20px;
+}
+
+.button-wrapper lightning-button {
+    margin: 0;
+}
+
+/* Summary Cards Styling */
+.summary-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #ffffff;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.summary-card h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #514f4d;
+}
+
+.summary-card p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0176d3;
+    margin: 0;
+}
+
+.box-percent {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
+    font-size: 0.8rem;
+    color: #888;
+    opacity: 0.85;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Red background for < 65% */
+.summary-card-red {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #ffebee;
+    border-left: 4px solid #f44336;
+}
+
+.summary-card-red:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+}
+
+.summary-card-red h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #d32f2f;
+}
+
+.summary-card-red p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f44336;
+    margin: 0;
+}
+
+/* Orange background for 65% - 99% */
+.summary-card-orange {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #fff3e0;
+    border-left: 4px solid #ecb767;
+}
+
+.summary-card-orange:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+}
+
+.summary-card-orange h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #e65100;
+}
+
+.summary-card-orange p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff9800;
+    margin: 0;
+}
+
+/* Green background for 100% */
+.summary-card-green {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #e8f5e8;
+    border-left: 4px solid #4caf50;
+}
+
+.summary-card-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.summary-card-green h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+.summary-card-green p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4caf50;
+    margin: 0;
+}
+
+.highlight-panel {
+    background: #f4f6fb;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 112, 210, 0.08);
+    border: 1px solid #d8dde6;
+    padding: 2rem 1rem 1rem 1rem;
+    margin-bottom: 2rem;
+}
+
+.ticker-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #032d60;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.sfdc-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+    padding: 20px 24px 18px 24px;
+    margin: 18px auto;
+    border-left: 4px solid #ffffff;
+}
+
+.summary-heading {
+    text-align: left;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #0b0d0e;
+    letter-spacing: 0.5px;
+}
+
+.summary-flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 24px;
+}
+.calendar-flex-col {
+    flex: 0 0 320px;
+    min-width: 320px;
+    max-width: 400px;
+}
+.leaderboard-flex-col {
+    flex: 2 1 0%;
+    min-width: 500px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.leaderboard-outer-card {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0px 30px 0px auto;
+}

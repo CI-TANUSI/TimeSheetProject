@@ -1,0 +1,25 @@
+<template>
+    <div class="summary-card">
+        <div class="summary-row">
+            <div class="summary-col sales">
+                <div class="summary-label">Filled Hours</div>
+                <div class="summary-value">{summary.FilledHours}</div>
+            </div>
+            <div class="summary-col revenue">
+                <div class="summary-label">Approved Hours</div>
+                <div class="summary-value">{summary.ApprovedHours}</div>
+            </div>
+            <div class="summary-col expense">
+                <div class="summary-label">Unapproved Hours</div>
+                <div class="summary-value">{summary.UnapprovedHours}</div>
+            </div>
+            <div class="summary-col pnl">
+                <div class="summary-label">Blank Hours</div>
+                <div class="summary-value">{summary.BlankHours}</div>
+            </div>
+        </div>
+        <template if:true={error}>
+            <div class="slds-text-color_error">{error}</div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,141 @@
+/* Container styles */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f6f8;
+    padding: 2rem;
+}
+
+/* Header section styles */
+.header-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a73e8;
+    margin: 0.5rem 0;
+}
+
+.subtitle {
+    color: #5f6368;
+    font-size: 1rem;
+}
+
+/* Form section styles */
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #202124;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: #5f6368;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+/* Form group styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #202124;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.input-group {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #202124;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: #80868b;
+}
+
+/* Button styles */
+.login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-button:hover {
+    background-color: #1557b0;
+}
+
+/* Demo credentials box */
+.demo-credentials {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dadce0;
+}
+
+.demo-credentials h3 {
+    color: #202124;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.demo-credentials p {
+    color: #5f6368;
+    font-size: 0.8rem;
+    margin: 0.25rem 0;
+}
+
+/* Footer styles */
+.footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: #5f6368;
+    font-size: 0.8rem;
+}

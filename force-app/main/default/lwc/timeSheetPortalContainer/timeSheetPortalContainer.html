@@ -1,0 +1,53 @@
+<template>
+    <div class="slds-scope">
+        <!--Header-->
+        <div class="slds-page-header slds-p-around_medium slds-theme_default">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="standard:timesheet" size="large"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <h1 class="slds-page-header__title slds-text-heading_large">Timesheet Portal</h1>
+                            <p class="slds-text-body_small">CloudIngenious</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-align-middle">
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-grid slds-grid_align-end slds-align-middle">
+                    <lightning-button-icon icon-name="utility:user" variant="border-filled" class="slds-m-right_small"></lightning-button-icon>
+                    <lightning-button label="Logout" onclick={handleLogout} variant="neutral"></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab -->
+        <lightning-tabset>  
+            <lightning-tab label="Home" value="home">
+                <div class="slds-p-around_medium">
+                    <c-time-sheet-portal-home-summary user-id={userId}></c-time-sheet-portal-home-summary>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="TimeSheet Entry" value="timesheetEntry">
+                <div class="slds-p-around_medium">
+                 <c-time-sheet-portal-Entry user-id={userId}></c-time-sheet-portal-Entry>
+
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Regularize" value="regularize">
+
+            </lightning-tab>
+            <lightning-tab label="TimeSheet Approval" value="timesheetApproval">
+
+            </lightning-tab>
+            <lightning-tab label="My Productivity" value="myProductivity">
+
+            </lightning-tab>
+            <lightning-tab label="Team Productivity" value="teamProductivity">
+
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>

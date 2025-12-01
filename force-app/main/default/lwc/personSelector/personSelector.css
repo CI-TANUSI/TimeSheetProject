@@ -1,0 +1,13 @@
+.heading-font-colors2{
+    font-family: 'Betm Rounded';
+    font-size: 20px;
+}
+.slds-tabs_default__nav{
+    border-bottom-style: none !important;
+}
+.custom-divider {
+    border-left: 1px solid #d8dde6; /* SLDS neutral border color */
+}
+.background{
+    background-color: white;
+}

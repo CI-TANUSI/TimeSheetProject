@@ -1,0 +1,75 @@
+.leader-board {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.leader-board h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.leader-board table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.leader-board th, .leader-board td {
+    padding: 0.5rem;
+    text-align: left;
+}
+.leader-board th {
+    background: #f4f6f9;
+}
+.leader-board tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.sfdc-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+    padding: 20px 24px 18px 24px;
+    margin: 18px auto;
+    max-width: 1600px;
+    width: 100%;
+    border-left: 4px solid #f8fcfffc;
+    overflow-x: auto;
+}
+.leaderboard-heading {
+    text-align: left;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #0b0d0e;
+    letter-spacing: 0.5px;
+}
+.leaderboard-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    table-layout: auto;
+}
+.leaderboard-table th {
+    background: #f4f6f9;
+    font-weight: 600;
+    padding: 8px 6px;
+    border-bottom: 2px solid #e5e5e5;
+    text-align: left;
+    font-size: 1rem;
+}
+.leaderboard-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.98rem;
+}
+.leaderboard-table tr:last-child td {
+    border-bottom: none;
+}
+
+.leaderboard-table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}

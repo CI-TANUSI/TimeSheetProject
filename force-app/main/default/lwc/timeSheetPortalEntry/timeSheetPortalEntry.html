@@ -1,0 +1,327 @@
+<template>
+    <div style="background-color: rgb(165, 206, 219); padding: 10px;">
+    <lightning-card title="">
+        <div style="background-color: rgb(183, 218, 228); padding: 10px;">
+        <div class="toolbar slds-grid slds-grid_align-spread slds-p-around_small">
+            <div class="nav-container slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+                <lightning-button variant="destructive" label="&lt;" onclick={goPrevAndClearWeek}></lightning-button>
+                <div class="week-box slds-m-horizontal_small">{weekLabel}</div>
+                <lightning-button variant="destructive" label="&gt;" onclick={goNextAndClearWeek}></lightning-button>
+            </div>
+            <div class="footer slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+                <lightning-button variant="brand" label="Save" icon-name="utility:save" icon-position="left"
+                    class="save-btn slds-m-left_small" onclick={saveTimesheetDraft}></lightning-button>
+                <lightning-button variant="brand" label="Submit" title="Primary action" onclick={submitTimesheet} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-scrollable_x">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Action</th>
+                        <th scope="col">Project Code</th>
+                        <template for:each={days} for:item="d">
+                            <th scope="col" key={d.dateISO} class="slds-cell-wrap">
+                                {d.dayName}<br />
+                                {d.dateDisplay}
+                            </th>
+                        </template>
+                        <th scope="col">Total (hrs)</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={entries} for:item="entry" for:index="rowIndex">
+                        <tr key={entry.id}>
+                            <td>
+                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"
+                                    onclick={handleDeleteRow} data-row-index={rowIndex} variant="bare"
+                                    class="slds-button_icon slds-button_icon-destructive">
+                                </lightning-button-icon>
+                            </td>
+                            <td>
+                                <lightning-combobox
+                                    name="project"
+                                    value={entry.Opportunity__c}
+                                    placeholder="Select Project"
+                                    options={projectOptions}
+                                    data-rowid={entry.id}
+                                    onchange={handleProjectChange}>
+                                </lightning-combobox>
+                            </td>
+                            <td key={dateISO0}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="0" data-row-index={rowIndex}
+                                        value={entry.day0} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="0"
+                                        onclick={openDescriptionPopup}>                                       
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc0}>
+                                    <div class="popup" style={entry.popupPosition0}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="0"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc0}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="0"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO1}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="1" data-row-index={rowIndex}
+                                        value={entry.day1} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="1"
+                                        onclick={openDescriptionPopup}>
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc1}>
+                                    <div class="popup" style={entry.popupPosition1}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="1"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc1}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="1"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO2}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="2" data-row-index={rowIndex}
+                                        value={entry.day2} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="2"
+                                        onclick={openDescriptionPopup}>
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc2}>
+                                    <div class="popup" style={entry.popupPosition2}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="2"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc2}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="2"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO3}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="3" data-row-index={rowIndex}
+                                        value={entry.day3} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="3"
+                                        onclick={openDescriptionPopup}>
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc3}>
+                                    <div class="popup" style={entry.popupPosition3}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="3"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc3}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="3"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO4}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="4" data-row-index={rowIndex}
+                                        value={entry.day4} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="4"
+                                        onclick={openDescriptionPopup}>
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc4}>
+                                    <div class="popup" style={entry.popupPosition4}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="4"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc4}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="4"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO5}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="5" data-row-index={rowIndex}
+                                        value={entry.day5} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="5"
+                                        onclick={openDescriptionPopup}
+                                        >
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc5}>
+                                    <div class="popup" style={entry.popupPosition5}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="5"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc5}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="5"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>
+                            <td key={dateISO6}>
+                                <div class="input-with-icon">
+                                    <lightning-input type="number" min="0" step="0.5"
+                                        data-day-index="6" data-row-index={rowIndex}
+                                        value={entry.day6} onchange={handleTimeChange}>
+                                    </lightning-input>
+                                    <!-- Edit icon -->
+                                    <lightning-button-icon icon-name="utility:edit" size="x-small"
+                                        alternative-text="Edit Description"
+                                        class="icon"
+                                        data-row-index={rowIndex} data-day-index="6"
+                                        onclick={openDescriptionPopup}>                                    
+                                    </lightning-button-icon>
+                                </div>
+                                <!-- Inline popup -->
+                                <template if:true={entry.showDesc6}>
+                                    <div class="popup" style={entry.popupPosition6}>
+                                       <textarea class="desc-input"
+                                            data-row-index={rowIndex} data-day-index="6"
+                                            oninput={handleDescInput}
+                                            placeholder="Technical Description">{entry.desc6}</textarea>
+                                        <!-- Close icon -->
+                                        <lightning-button-icon icon-name="utility:close" size="x-small"
+                                            alternative-text="Close"
+                                            data-row-index={rowIndex} data-day-index="6"
+                                            onclick={closeDescriptionPopup}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </template>
+                            </td>                       
+                            <td><b>{entry.total}</b></td>
+                        </tr>
+                    </template>
+                </tbody>
+                <tfoot class="footers">
+                    <tr>
+                        <td>
+                            <lightning-button-icon icon-name="utility:add" alternative-text="Add Row"
+                                onclick={addRow} title="Add New Row">
+                            </lightning-button-icon>
+                        </td>
+                        <td><b>Total (hrs)</b></td>
+                        <td key={dateISO0}><b>{dayTotal0}</b></td>
+                        <td key={dateISO1}><b>{dayTotal1}</b></td>
+                        <td key={dateISO2}><b>{dayTotal2}</b></td>
+                        <td key={dateISO3}><b>{dayTotal3}</b></td>
+                        <td key={dateISO4}><b>{dayTotal4}</b></td>
+                        <td key={dateISO5}><b>{dayTotal5}</b></td>
+                        <td key={dateISO6}><b>{dayTotal6}</b></td>
+                        <td><b>{weekTotal}</b>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <template if:true={message}>
+            <p class="slds-p-around_small slds-text-color_success">{message}</p>
+        </template>
+        <template if:true={error}>
+            <p class="slds-p-around_small slds-text-color_error">{error}</p>
+        </template>
+       </div>
+        <template if:true={showPopup}>
+    <div class={popupClass}>
+        <p>{popupMessage}</p>
+    </div>
+</template>
+       <div class="slds-p-around_medium">
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium slds-align_absolute-center">
+                        <div class="slds-col slds-size_2-of-6">
+                            <div class="slds-input-has-icon slds-input-has-icon_left">
+                                <lightning-icon icon-name="utility:search" size="x-small" class="slds-input__icon"></lightning-icon>
+                                <input type="text" id="search" class="slds-input" placeholder="Search..." oninput={handleSearchChange} value={searchKey}/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={data} 
+                        columns={columns} 
+                        onrowaction={handleRowAction}
+                        sorted-by={sortedBy} 
+                        sorted-direction={sortedDirection} 
+                        onsort={handleSort}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>   
+                    <div class="slds-m-around_medium slds-text-align_center">
+                        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious} disabled={isFirstPage}></lightning-button>
+                        <span class="slds-m-horizontal_medium">Page {pageNumber} of {totalPages}</span>
+                        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext} disabled={isLastPage}></lightning-button>
+                    </div>
+                </div>
+    </lightning-card>   
+    </div>
+</template>

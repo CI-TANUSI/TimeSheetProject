@@ -1,0 +1,50 @@
+<template>
+    <div class="team-productivity">
+        <div class="year-picker">
+            <label for="year">Year:</label>
+            <select id="year" value={selectedYear} onchange={handleYearChange}>
+                <template for:each={yearOptions} for:item="y">
+                    <option key={y.value} value={y.value}>{y.label}</option>
+                </template>
+            </select>
+        </div>
+        <div class="person-picker">
+            <label for="person">Person:</label>
+            <select id="person" value={selectedPerson} onchange={handlePersonChange}>
+                <template for:each={personOptions} for:item="p">
+                    <option key={p.value} value={p.value}>{p.label}</option>
+                </template>
+            </select>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <!-- <template if:false={isAllSelected}>
+                        <th>Person</th>
+                    </template> -->
+                    <th>Filled Hours</th>
+                    <th>Approved Hours</th>
+                    <th>Unapproved Hours</th>
+                    <th>Temp Approved Hours</th>
+                    <th>Blank Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={tableRows} for:item="row">
+                    <tr key={row.key}>
+                        <td>{row.monthName}</td>
+                        <!-- <template if:false={isAllSelected}>
+                            <td>{row.personName}</td>
+                        </template> -->
+                        <td>{row.filled}</td>
+                        <td>{row.approved}</td>
+                        <td>{row.unapproved}</td>
+                        <td>{row.tempApproved}</td>
+                        <td>{row.blank}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

@@ -1,0 +1,164 @@
+<template>
+    
+    <lightning-card  title="">
+        <!-- WEEK NAVIGATION -->
+         <div class="toolbar slds-grid slds-grid_align-spread slds-p-around_small">
+    
+    <!-- LEFT: Week navigation & label -->
+    <div class="nav-container slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+        <lightning-button variant="destructive" label="&lt;" onclick={goPrevWeek}></lightning-button>
+        <div class="week-box">{weekLabel}</div>
+        <lightning-button variant="destructive" label="&gt;" onclick={goNextWeek}></lightning-button>
+    </div>
+
+    <!-- RIGHT: Clear and Save buttons -->
+    <div class="footer slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+        <lightning-button variant="neutral" label="Clear" onclick={clearWeek}></lightning-button>
+        <lightning-button 
+            variant="brand"
+            label="Save"
+            title="Save Record"
+            icon-name="utility:save"
+            icon-position="left"
+            class="save-btn slds-m-left_small"
+            onclick={saveTimesheet}>
+        </lightning-button>
+        <lightning-button variant="brand" label="Submit" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </div>
+</div>
+
+ <!-- MAIN TABLE -->
+<div class="slds-p-horizontal_small">
+    <table class="timesheet-table">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th><abbr class="slds-required" title="required">*</abbr>Project Code</th>
+                <template for:each={days} for:item="d">
+                    <th key={d.dateISO}>
+                        {d.dayName}<br />
+                        {d.dateDisplay}<br />
+                        <small>TimeTaken (Min)</small>
+                    </th>
+                </template>
+                <th>Total Time(hr)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <template for:each={entries} for:item="entry" for:index="index">
+                <tr key={entry.id}>
+                    <td>
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            alternative-text="Delete Row"
+                            onclick={handleDeleteRow}
+                            data-index={index}
+                            variant="bare"
+                            class="delete-icon">
+                        </lightning-button-icon>
+                    </td>
+
+                    <!-- PROJECT INFO -->
+                    <td>
+                        <lightning-combobox
+                            name="Project Code"
+                            label=""
+                            value={projectCode}
+                            placeholder="Select Project Code"
+                            options={projectCodeOptions}
+                            class="validation"
+                            onchange={handleInputChange}>
+                        </lightning-combobox>
+                    </td>
+
+                    <!-- HOURS FOR EACH DAY -->
+                    <template for:each={days} for:item="d">
+                        <td key={d.dateISO} data-td-index={d.index}>
+                            <div class="input-with-icon">
+                                <lightning-input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-index={d.index}
+                                    value={d.timeTaken}
+                                    onchange={handleTimeChange}>
+                                </lightning-input>
+
+                                <lightning-button-icon
+                                    icon-name="utility:edit"
+                                    alternative-text="Edit"
+                                    title="Edit"
+                                    size="small"
+                                    data-index={d.index}
+                                    variant="bare"
+                                    onclick={handleEditClick}>
+                                </lightning-button-icon>
+                            </div>
+                        </td>
+                    </template>
+
+                    <td class="total-value">{totalTime}</td>
+                </tr>
+            </template>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>
+                    <lightning-button-icon
+                        icon-name="utility:add"
+                        alternative-text="Add Week"
+                        onclick={handleAddWeek}>
+                    </lightning-button-icon>
+                </td>
+                <td class="headingTotal">Total Hours</td>
+                <template for:each={days} for:item="d">
+                    <td key={d.dateISO} data-td-index={d.index} class="total">
+                        {totalTime}
+                    </td>
+                </template>
+                <td>{total}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!--  MODAL POPUP FOR TECHNICAL DESCRIPTION -->
+<template if:true={isModalOpen}>
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">
+                    Add Technical Description - {selectedDayName} ({selectedDate})
+                </h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+                <lightning-textarea
+                    label="Technical Description"
+                    value={currentTechDesc}
+                    onchange={handleTechChange}>
+                </lightning-textarea>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                <lightning-button label="Save" variant="brand" onclick={saveTechDesc}></lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+
+        <!-- STATUS MESSAGES -->
+        <template if:true={message}>
+            <p class="slds-p-around_small success-msg">{message}</p>
+        </template>
+        <template if:true={error}>
+            <p class="slds-p-around_small error-msg">{error}</p>
+        </template>
+    </lightning-card>
+    
+</template>

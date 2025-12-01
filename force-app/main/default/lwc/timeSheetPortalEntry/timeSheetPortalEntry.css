@@ -1,0 +1,178 @@
+:host {
+    display: block;
+    --table-border: #286dd4;
+}
+.toolbar {
+    align-items: center;
+   
+    
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+}
+.timesheet-table {
+    width: 100%;
+    background-color: #e5ecf1;
+    border-collapse: collapse;
+}
+
+.timesheet-all{
+    background-color: #0b6b3a;
+}
+
+
+.timesheet-table th, .timesheet-table td {
+    border: 1px solid var(--table-border);
+    padding: 6px;
+    text-align: center;
+    vertical-align: middle;
+    
+}
+
+.timesheet-table th {
+    background: #d3d891;
+    font-weight: 600;
+}
+
+.total-value {
+    font-weight: bold;
+    background-color: #a2bcf1;
+}
+.total {
+    font-weight: bold;
+    background-color: #c6f2ee;
+}
+.headingTotal{
+    font-weight:800 ;
+    color: #9e4040;
+}
+.success-msg {
+    color: #0b6b3a;
+    font-size: large;
+    font-weight: 700;
+}
+.error-msg {
+    color: #b71c1c;
+    font-size: large;
+    font-weight: 700;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center; /* vertically center */
+    justify-content: center; /* center horizontally */
+    gap: 10px; /* space between buttons and week label */
+}
+
+.week-box {
+    background-color: #f7e4ed;
+    border: 1px solid #d8dde6;
+    border-radius: 5px;
+    padding: 6px;
+    margin: 0px;
+    text-align: center;
+    font-weight: 600;
+    color: #b6062c; /* Salesforce blue */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px; /* space between Clear and Save */
+}
+.save-btn {
+    --slds-c-button-brand-color-background: #0d8128; 
+    --slds-c-button-brand-color-border: #28a745;
+    --slds-c-button-brand-color-background-hover: #5fb371;
+    --slds-c-button-brand-color-border-hover: #218838;
+    --slds-c-button-brand-color-text: white;
+    
+}
+.delete-icon {
+    --slds-c-icon-color-foreground: #e60000; 
+    --slds-c-icon-color-background: transparent;
+}
+
+.delete-icon:hover {
+    --slds-c-icon-color-foreground: #b30000; 
+}
+.input-with-icon {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-left: 10px;
+    
+    cursor: pointer;
+    border: none !important;       /* removes any border */
+    box-shadow: none !important;   /* removes shadow if any */
+    outline: none !important;
+}
+
+.slds-modal__container {
+    width: 400px; 
+    max-width: 90%; 
+}
+.input-with-icon {
+    position: relative;
+}
+
+.popup {
+    position: absolute;
+    top: 30px; /* icon ke neeche */
+    left: 0;
+    background: #fff;
+    border: 3px solid #ccc;
+    padding: 5px;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.close button{
+    color: #b71c1c;
+}
+.desc-input {
+    width: 450px;
+    height: 120px;
+}
+
+.footers {
+    background-color: #a4c6e3;
+}
+.popup-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-weight: 800;
+    font-size: 20px;
+    background-color: #2e7d32;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    z-index: 9999;
+}
+.popup-error {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-weight: 800;
+    font-size: 20px;
+    background-color: #c62828;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    z-index: 9999;
+}
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}

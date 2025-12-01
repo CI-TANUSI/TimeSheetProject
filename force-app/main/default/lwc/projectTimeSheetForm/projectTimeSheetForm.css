@@ -1,0 +1,14 @@
+.slds-modal__container {
+    max-width: 50rem;
+    width: 90%;
+}
+
+.slds-modal__content lightning-input,
+.slds-modal__content lightning-combobox,
+.slds-modal__content lightning-textarea {
+    margin-bottom: 1rem;
+}
+
+.slds-modal__footer lightning-button + lightning-button {
+    margin-left: 0.5rem; 
+}

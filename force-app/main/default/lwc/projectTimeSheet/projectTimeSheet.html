@@ -1,0 +1,74 @@
+<template>
+    <lightning-card title="Timesheet">
+        <div class="week-header slds-grid slds-p-horizontal_small slds-border_bottom">
+            <div class="project-column">Project Code</div>
+            <template for:each={weekDays} for:item="day">
+                <div key={day.label} class="day-column">
+                    {day.date}/{day.month}{day.label}
+                </div>
+            </template>
+            <div class="total-column">Weekly Total</div>
+            <div class="action-column">
+                <lightning-button label="Add" title="Add Project" icon-name="utility:add" icon-position="left"
+                    variant="brand" onclick={handleAdd}>
+                </lightning-button>
+            </div>
+        </div>
+ 
+        <div class="timesheet-table slds-p-around_small">
+            <template for:each={projectList} for:item="proj">
+                <div key={proj.id} class="slds-grid slds-border_bottom slds-p-vertical_x-small">
+
+                    <div class="project-column">
+                        <lightning-combobox label="" placeholder="Select Project" options={projectOptions}
+                            value={proj.projectCode} data-id={proj.id} onchange={handleProjectChange}>
+                        </lightning-combobox>
+                    </div>
+    
+                    <template for:each={proj.hoursArray} for:item="h">
+                        <div key={h.label} class="day-column">
+
+                            <div class="my-custom-input">
+                        <lightning-input type="number" value={h.value} disabled></lightning-input>
+                    </div>
+                             <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" title="Edit"
+                                variant="bare" class="edit-icon" data-projid={proj.id} data-day={h.label}
+                                onclick={openTimesheetForm} disabled={h.isDisabled} data-date={h.date} data-projectcode={proj.projectCode} data-timetaken={h.timeTaken}
+                                data-type={h.Type} data-status={h.Status} data-recordid={h.recordId} data-functiondes={h.functionDescription}
+                                data-technicaldes={h.technicalDescription} data-draft={h.draft}>
+                            </lightning-button-icon>
+                        </div>
+                    </template>
+
+                    <div class="total-column">
+                        <div class="total-hours-box">{proj.totalHours}</div>
+                    </div>
+
+                </div>
+            </template>
+        </div>
+
+        <div class="week-header slds-border_top total-row">
+            <div class="project-column"><b>Total (All Projects)</b></div>
+            <template for:each={dayTotals} for:item="dayTotal">
+                <div key={dayTotal.label} class="day-column"><b>{dayTotal.value}</b></div>
+            </template>
+            <div class="total-column"><b>{grandTotal}</b></div>
+            <div class="action-column"></div>
+        </div>
+
+    </lightning-card>
+
+    <c-project-time-sheet-form
+    if:true={showForm}
+    selected-day={selectedDay}
+    selected-project-codes={selectedProjectCodes}
+    onclose={closeForm}
+    today-date={todayDate}
+    onsubmit={handleFormSubmit}
+    time-taken-in-min={timeTakenInMin}
+    record-id={recordId} technical-des={technicalDes} function-des={functionDes} status={status} type={type}
+    draft={draft}
+    >
+</c-project-time-sheet-form>
+</template>

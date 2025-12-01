@@ -1,0 +1,89 @@
+.regularization-container {
+    padding: 1rem;
+}
+
+/* Table styles */
+.slds-table {
+    background-color: white;
+}
+
+/* Sub-header styles */
+.sub-header {
+    font-size: 0.8125rem;
+    color: #514f4d;
+    font-weight: normal;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Employee column styles */
+.employee-id {
+    color: #706e6b;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+}
+
+.employee-name {
+    font-weight: 600;
+}
+
+/* Status styles */
+.status-approved {
+    color: #04844b;
+    background-color: #f3faf3;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+}
+
+.status-rejected {
+    color: #c23934;
+    background-color: #fef1ee;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+}
+
+/* Avatar styles */
+.slds-avatar {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+}
+
+.slds-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Media object styles */
+.slds-media {
+    display: flex;
+    align-items: center;
+}
+
+/* Table cell padding */
+.slds-table td {
+    padding: 0.5rem 0.75rem;
+}
+
+/* Checkbox alignment */
+lightning-input[type="checkbox"] {
+    display: flex;
+    justify-content: center;
+}
+
+/* Filter icon styles */
+.slds-card__header {
+    position: relative;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #706e6b;
+    cursor: pointer;
+}

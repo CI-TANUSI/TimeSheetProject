@@ -1,0 +1,113 @@
+<template>
+    <section class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+
+            <header class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">New Timesheet</h2>
+            </header>
+
+          
+            <div class="slds-modal__content slds-p-around_medium">
+                <div class="slds-grid slds-wrap slds-gutters">
+
+               
+                    <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="date"
+                        label="Date"
+                        name="Date__c"
+                        value={date}
+                        onchange={handleChange}
+                        disabled>
+                    </lightning-input>
+                   </div>
+
+                   <!-- need to replce name or all field the actual name which i have in timesheet entry object name = -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox
+                            label="Type"
+                            
+                            name="type__c"
+                            value={type}
+                            options={typeOptions}
+                            required
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+
+                    
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox
+                            label="Project Code"
+                            name="Project_code__c"
+                            placeholder="Select Project Code"
+                            options={projectOptions}
+                            value={projectCode}
+                            disabled>
+                        </lightning-combobox>
+                    </div>
+
+                  
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox
+                            label="Work Status"
+                            name="WorkStatus__c"
+                            value={workStatus}
+                            options={statusOptions}
+                            required
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input
+                                type="number"
+                                step="0.01"               
+                                label="Time Taken (min)"
+                                name="Time_Taken_min__c"
+                                value={timeTaken}
+                                required
+                                onchange={handleChange}>
+                            </lightning-input>
+                        </div>
+
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-textarea
+                            label="Technical Description"
+                            name="Technical_Description__c"
+                            value={technicalDescription}
+                            onchange={handleChange}>
+                        </lightning-textarea>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-textarea
+                            label="Functional Description"
+                            name="Functional_Description__c"
+                            value={functionalDescription}
+                            onchange={handleChange}>
+                        </lightning-textarea>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button
+                    label="Cancel"
+                    onclick={handleCancel}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Save as Draft"
+                    variant="neutral"
+                    onclick={handleDraft}>
+                </lightning-button>
+ 
+                <lightning-button
+                    variant="brand"
+                    label="Submit"
+                    onclick={handleSubmit}>
+                </lightning-button>
+            </footer>
+        </div>
+    </section>
+</template>

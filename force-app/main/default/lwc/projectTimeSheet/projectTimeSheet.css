@@ -1,0 +1,66 @@
+.week-header, .timesheet-table .slds-grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 28px;
+}
+
+
+.project-column {
+    width: 160px;
+    padding: 0 5px;
+}
+.day-column {
+    width: 80px;
+    text-align: center;
+    padding: 0 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px; 
+}
+.total-column {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0 5px;
+}
+.action-column {
+    width: 80px;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.day-hours-box, .total-hours-box {
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+    min-width: 40px;
+    display: inline-block;
+    text-align: center;
+}
+
+
+.edit-icon {
+    position: static; 
+}
+
+.action-column lightning-button {
+    width: 60px;
+}
+
+
+.total-row {
+    background-color: #f4f6f9;
+    font-weight: bold;
+}
+
+/* Combobox width */
+.project-column lightning-combobox {
+    width: 150px;
+}
+
+.my-custom-input {
+    padding-inline:0px !important;
+}

@@ -1,0 +1,67 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    
+  <template if:false={isLoading}>
+       <template if:true={showLoginpage}>
+         <div class="login-container">
+            <!-- Logo and Title Section -->
+            <div class="header-section">
+                <img src={logoUrl} alt="Cloud Ingenious Logo" class="logo" />
+                <h1 class="title">Cloud Ingenious</h1>
+                <p class="subtitle">Employee Timesheet Portal</p>
+            </div>
+
+            <!-- Login Form Section -->
+            <div class="form-section">
+                <h2 class="form-title">Sign In</h2>
+                <p class="form-subtitle">Enter your credentials to access your timesheet</p>
+
+                <!-- Login Form -->
+                <div class="login-form">
+                    <div class="form-group">
+                        <label for="username">Email Address</label>
+                        <div class="input-group">
+                            <input type="email" id="username" class="form-input validation"
+                                placeholder="john.doe@cloudingenious.com" value={username}
+                                onchange={handleUsernameChange} required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="password" class="form-input validation"
+                                placeholder="Enter your password" value={password} onchange={handlePasswordChange}
+                                required />
+                        </div>
+                    </div>
+
+                    <!-- <button class="login-button" onclick={handleLogin}>Sign In</button> -->
+                    <button class="slds-button slds-button_brand login-button" onclick={handleLogin}>Sign In</button>
+                    <!-- <lightning-button variant="brand" label="Sign In" title="Sign In" onclick={handleLogin} class="slds-m-left_x-small"></lightning-button> -->
+                </div>
+
+                <!-- Demo Credentials Box -->
+                <!-- <div class="demo-credentials">
+                    <h3>Demo Credentials:</h3>
+                    <p>Email: john.doe@cloudingenious.com</p>
+                    <p>Password: password123</p>
+                </div> -->
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>© 2025 Cloud Ingenious. All rights reserved.</p>
+            </div>
+         </div>
+      </template>
+
+       <template if:true={showEntrypage}>
+        <c-time-sheet-entry person-id={personId} onlogout={handleLogoutFromChild}></c-time-sheet-entry>
+       </template>
+
+  </template>
+
+</template>

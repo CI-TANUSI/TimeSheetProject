@@ -1,0 +1,28 @@
+<template>
+    <div class="sfdc-card">
+        <h3 class="calendar-heading">TimeSheet Reminder</h3>
+        <div class="calendar">
+            <div class="calendar-header-row">
+                <button class="calendar-nav" onclick={handlePrevMonth} title="Previous Month">&#60;</button>
+                <span class="calendar-header-label">{monthName} {year}</span>
+                <button class="calendar-nav" onclick={handleNextMonth} title="Next Month">&#62;</button>
+            </div>
+            <div class="calendar-grid">
+                <template for:each={weekdays} for:item="day">
+                    <div key={day} class="calendar-cell calendar-header-cell">{day}</div>
+                </template>
+                
+                <template for:each={calendarDays} for:item="dayObj">
+                    <div key={dayObj.key} class={dayObj.className} data-day={dayObj.day} onclick={handleDayClick}>
+                        <span>{dayObj.day}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="calendar-legend-vertical">
+            <div class="legend-item"><span class="legend-box legend-red"></span> <span class="legend-label">Timesheet not filled or ≤ 4 hours</span></div>
+            <div class="legend-item"><span class="legend-box legend-orange"></span> <span class="legend-label">Timesheet filled &gt; 4 and &lt; 8 hours</span></div>
+            <div class="legend-item"><span class="legend-box legend-green"></span> <span class="legend-label">Timesheet filled ≥ 8 hours</span></div>
+        </div>
+    </div>
+</template>

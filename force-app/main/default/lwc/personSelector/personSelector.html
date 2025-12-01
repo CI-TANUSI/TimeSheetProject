@@ -1,0 +1,83 @@
+<template >
+
+            <template if:true={isUser}>
+            <div class="slds-page-header slds-page-header_record-home slds-m-horizontal_medium background slds-box">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-opportunity">
+                                    <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                        <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg#user"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h1>
+                                            <span>Assigned ProjectCode</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+                                <ul class="slds-button-group-list">
+                                    <li>
+                                        <button class="slds-button slds-button_brand" onclick ={handleAssignedUsers}>Assign Person</button> <!-- Edit Button -->
+                                    </li>
+                                    <li>
+                                        <button class="slds-button slds-button_brand custom-divider" onclick ={handleRemoveAssignedUsers}>Remove Person</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-box  background slds-m-around--medium">
+                <div class="slds-page-header__col-details">
+                    <lightning-datatable 
+                    data={assigndata} 
+                    columns={userColumns} 
+                    onrowselection={handleRowSelection}
+                    selected-rows={selectedUserIds}
+                    key-field="Id"
+                    data-id = "removeUsers">
+                </lightning-datatable>
+                </div>
+            </div>
+            </template>
+
+            <template if:true={isAssignUser}>
+
+                <div class="slds-box background slds-m-horizontal_medium">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                    <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                      <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#search"></use>
+                    </svg>
+                    <input type="text" id="text-input-id-47" placeholder="Search User" class="slds-input" onchange ={handleUserSearch}/>
+                </div>
+              </div>
+              <div class="slds-box background slds-m-horizontal_medium" id="modal-content-id-1">
+                <lightning-datatable 
+                    data={filteredData} 
+                    columns={userColumns} 
+                    onrowselection={handleRowSelection}
+                    selected-rows={selectedUserIds}
+                    key-field="Id"
+                    data-id = "assignUsers">
+                </lightning-datatable>
+              </div>
+              <div class="slds-box background slds-m-horizontal_medium">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCancel}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleAssign}>Assign</button>
+              </div>
+        
+    </template>
+        </template>

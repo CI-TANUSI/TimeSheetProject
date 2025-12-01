@@ -1,0 +1,37 @@
+.summary-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px 8px;
+    background: #fafbfc;
+    margin: 8px 0;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.summary-col {
+    flex: 1;
+    text-align: center;
+}
+.summary-label {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+.summary-value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.sales .summary-label, .sales .summary-value {
+    color: #0033cc;
+}
+.revenue .summary-label, .revenue .summary-value {
+    color: #7c3aed;
+}
+.expense .summary-label, .expense .summary-value {
+    color: #38bdf8;
+}
+.pnl .summary-label, .pnl .summary-value {
+    color: #16a34a;
+}
