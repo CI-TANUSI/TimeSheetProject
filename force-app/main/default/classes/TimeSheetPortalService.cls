@@ -1,5 +1,4 @@
 public inherited sharing class TimeSheetPortalService {
-
     private static TimeSheetPortalService serviceInstance;
     public static TimeSheetPortalService getInstance() {
         if (serviceInstance == null) {
@@ -78,8 +77,6 @@ public inherited sharing class TimeSheetPortalService {
 
             return response;
         }
-
-
         Session_Log__c log = getSessionRecord(sessionKey);
         log.Refresh_Time__c = Datetime.now();
         update log;
@@ -88,22 +85,56 @@ public inherited sharing class TimeSheetPortalService {
 
         return response;
     }
+
     //for calender
-     public static Map<String, Decimal> getFilledHoursByDate(Id userId) {
-        Map<String, Decimal> result = new Map<String, Decimal>();
+    public class DayInfo {
+        @AuraEnabled public String dateStr;
+        @AuraEnabled public Decimal hours;
+        @AuraEnabled public String color;
+        @AuraEnabled public String title;
+    }
+    public static List<DayInfo> getFilledHoursByDate(Id userId) {
+        Map<Date, Decimal> hoursMap = new Map<Date, Decimal>();
         for (AggregateResult ar : [
             SELECT TimesheetDate__c, SUM(TimeInHour__c) totaltime
             FROM Timesheet_Entry__c
             WHERE Person__c = :userId AND TimesheetDate__c <= TODAY
             GROUP BY TimesheetDate__c
         ]) {
-            Date d = (Date) ar.get('TimesheetDate__c');
-            result.put(d.format(), (Decimal) ar.get('totaltime'));    
+            hoursMap.put(
+                (Date) ar.get('TimesheetDate__c'),
+                (Decimal) ar.get('totaltime')
+            );
         }
-        return result;
+        List<DayInfo> responseList = new List<DayInfo>();
+        Date startDate = Date.today().addDays(-365);
+        Date endDate = Date.today();
+        for (Date d = startDate; d <= endDate; d = d.addDays(1)) {
+            DateTime dt = DateTime.newInstance(d.year(), d.month(), d.day());
+            String dayName = dt.format('E');  
+            if (dayName == 'Sat' || dayName == 'Sun') {
+                continue;
+            }
+            DayInfo info = new DayInfo();
+            info.dateStr = d.format(); 
+            info.hours = hoursMap.containsKey(d) ? hoursMap.get(d) : 0;  
+            if (info.hours < 4) {
+                info.color = '#dc3545';
+                info.title = 'Timesheet: ' + info.hours + 'h (Low/Unfilled)';
+            }
+            else if (info.hours < 8) {
+                info.color = '#ffc107';
+                info.title = 'Timesheet: ' + info.hours + 'h (Partial)';
+            }
+            else {
+                info.color = '#28a745';
+                info.title = 'Timesheet: ' + info.hours + 'h (Filled)';
+            }
+            responseList.add(info);
+        }
+        return responseList;
     }
-
-
+   
     //Chart
     public Object getChartData(String userId, String filter) {
         Map<String, Object> responseMap = new Map<String, Object>();
@@ -131,7 +162,7 @@ public inherited sharing class TimeSheetPortalService {
                 Map<Integer, Decimal> tempMap = statusVsMonthVsTimeTakenMap.get(status);
                 if(!tempMap.containsKey(month)) {
                     tempMap.put(month, 0);
-                }
+                } 
                 tempMap.put(month, timeTaken + tempMap.get(month));
                 statusVsMonthVsTimeTakenMap.put(status, tempMap);
             }

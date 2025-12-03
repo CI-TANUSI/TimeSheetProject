@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div style="background-color: rgb(165, 206, 219); padding: 10px;">
     <lightning-card title="">
         <div style="background-color: rgb(183, 218, 228); padding: 10px;">
@@ -291,18 +292,17 @@
             <p class="slds-p-around_small slds-text-color_error">{error}</p>
         </template>
        </div>
-        <template if:true={showPopup}>
+        <!-- <template if:true={showPopup}>
     <div class={popupClass}>
         <p>{popupMessage}</p>
     </div>
-</template>
+</template> -->
        <div class="slds-p-around_medium">
                     <div class="slds-grid slds-gutters slds-m-bottom_medium slds-align_absolute-center">
                         <div class="slds-col slds-size_2-of-6">
                             <div class="slds-input-has-icon slds-input-has-icon_left">
                                 <lightning-icon icon-name="utility:search" size="x-small" class="slds-input__icon"></lightning-icon>
                                 <input type="text" id="search" class="slds-input" placeholder="Search..." oninput={handleSearchChange} value={searchKey}/>
-
                             </div>
                         </div>
                     </div>
@@ -324,4 +324,6 @@
                 </div>
     </lightning-card>   
     </div>
+    </div>
+    
 </template>

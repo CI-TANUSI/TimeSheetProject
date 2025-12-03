@@ -70,7 +70,8 @@ public without sharing class TimeSheetPortalController {
         return responseMap;
     }
 
-    
+   
+    //Chart
     @AuraEnabled
     public static Object getChartData(String userId, String filter){
         Map<String, Object> responseMap = new Map<String, Object>();
@@ -82,7 +83,7 @@ public without sharing class TimeSheetPortalController {
             responseMap.put('errorMessage', e.getMessage());
             responseMap.put('lineNumber', e.getLineNumber());
             responseMap.put('stackTrace', e.getStackTraceString());
-        }
+        }  
         return responseMap;
     }
      @AuraEnabled(cacheable=true)
